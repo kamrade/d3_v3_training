@@ -5,9 +5,9 @@ var $c_01 = '#21b1e0',
 console.log( "D3 version: " + d3.version );
 
 
-d3.select("p.test")
-	.text("This text placed here with d3");
+d3.select("h1.title")
+	.text("D3 JS testing");
 
-d3.select(".work")
+d3.select(".head-text")
 	.append("p")
-	.text("New text here");
+	.text("Practice and learnng 3-rd version of d3");
