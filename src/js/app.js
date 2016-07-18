@@ -6,6 +6,9 @@ console.log( "D3 version: " + d3.version );
 
 var width = 400;
 var height = 200;
+var barHeight = 20;
+
+var dataArray = [20, 40, 50, 20, 12, 19, 49];
 
 d3.select("h1.title")
 	.text("D3 JS testing");
@@ -20,20 +23,13 @@ var canvas = d3.select(".work")
 	.attr("width", width)
 	.attr("height", height);
 
-var circle = canvas.append("circle")
-	.attr("cx", width/2)
-	.attr("cy", height/2)
-	.attr("r", (width+height)/2/4)
-	.attr("fill", $c_02);
+var bars = canvas.selectAll("rect")
+	.data(dataArray)
+	.enter()
+		.append("rect")
+		.attr("width", function(d) { return d; })
+		.attr("height", barHeight)
+		.attr("y", function(d, i) { return (barHeight + 2) * i });
 
-var rect = canvas.append("rect")
-	.attr("width", 100)
-	.attr("height", 50);
 
-var line = canvas.append("line")
-	.attr("x1", 0)
-	.attr("y1", 100)
-	.attr("x2", 400)
-	.attr("y2", 400)
-	.attr("stroke", $c_02)
-	.attr("stroke-width", 5);
+
