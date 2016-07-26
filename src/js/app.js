@@ -6,27 +6,15 @@ var $c_01 = '#21b1e0',
 
 console.log( "D3 version: " + d3.version );
 
-var data = [10]
-	width = 500,
-	height = 500;
+var data = [ 44, 10, 20, 30, 40, 50 ];
 
-var canvas = d3.select(".work")
-	.append("svg")
-	.attr("width", width)
-	.attr("height", height);
-
-var circle = canvas.append("circle")
-	.attr("cx", 100)
-	.attr("cy", 100)
-	.attr("r", 25)
-	.style("transition", "ease .3s all");
-
-circle.transition()
-	.duration(1500)
-	.delay(2000)
-	.attr("cx", 400)
-	.each("start", function() { d3.select(this).attr("fill", "blue") })
-	.each("end", function() { d3.select(this).attr("fill", "red") })
-	.transition()
-	.attr("cy", 300)
-	.attr("cx", 100);
+console.log( data.shift() );
+console.log( data );
+console.log( data.sort(d3.descending) );
+console.log( d3.min(data) );
+console.log( d3.max(data) );
+console.log( d3.extent(data) );
+console.log( d3.sum(data) );
+console.log( d3.mean(data) );
+console.log( d3.median(data) );
+console.log( d3.shuffle(data) );
