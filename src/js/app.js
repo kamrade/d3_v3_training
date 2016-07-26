@@ -9,38 +9,38 @@ console.log( "D3 version: " + d3.version );
 var width = 500,
 	height = 500;
 
-d3.csv("/mydata.csv", function(data) {
-	
-	var canvas = d3.select(".work").append("svg")
-		.attr("width", width)
-		.attr("height", height);
+var data = [
 
-	canvas.selectAll("rect")
-		.data(data)
-		.enter()
-			.append("rect")
-			.attr("width", function(d) {
-				return d.age * 5;
-			})
-			.attr("height", 20)
-			.attr("y", function(d, i) {
-				return i * 22;
-			})
-			.attr("fill", $c_01);
+	{ x: 10, y: 20 },
+	{ x: 140, y: 260 },
+	{ x: 250, y: 270 }
 
-	canvas.selectAll("text")
-		.data(data)
-		.enter()
-			.append("text")
-			.attr("fill", "white")
-			.attr("y", function(d, i) {
-				return i * 22 + 14;
-			})
-			.attr("x", 4)
-			.text(function(d) {
-				return d.name;
-			});
+];
 
-});
+var canvas = d3.select(".work").append("svg")
+	.attr("height", height)
+	.attr("width", width);
+
+var group = canvas.append("g")
+	.attr("tranform", "translate(100, 100)");
+
+var line = d3.svg.line()
+	.x(function(d) {
+		return d.x;
+	})
+	.y(function(d) {
+		return d.y;
+	});
+
+group.selectAll("path")
+	.data([data])
+	.enter()
+		.append("path")
+		.attr("d", line)
+		.attr("fill", "none")
+		.attr("stroke", "#333")
+		.attr("stroke-width", 5);
+
+
 
 
