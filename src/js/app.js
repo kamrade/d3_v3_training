@@ -9,37 +9,25 @@ console.log( "D3 version: " + d3.version );
 var width = 500,
 	height = 500;
 
-var data = [
-
-	{ x: 10, y: 20 },
-	{ x: 140, y: 260 },
-	{ x: 250, y: 270 }
-
-];
 
 var canvas = d3.select(".work").append("svg")
 	.attr("height", height)
 	.attr("width", width);
 
 var group = canvas.append("g")
-	.attr("tranform", "translate(100, 100)");
+	.attr( "transform" , "translate(100, 100)" );
 
-var line = d3.svg.line()
-	.x(function(d) {
-		return d.x;
-	})
-	.y(function(d) {
-		return d.y;
-	});
+var r = 100;
+var p = Math.PI * 2;
 
-group.selectAll("path")
-	.data([data])
-	.enter()
-		.append("path")
-		.attr("d", line)
-		.attr("fill", "none")
-		.attr("stroke", "#333")
-		.attr("stroke-width", 5);
+var arc = d3.svg.arc()
+	.innerRadius(r - 20)
+	.outerRadius(r)
+	.startAngle(0)
+	.endAngle(p - 1);
+
+group.append("path")
+	.attr("d", arc);
 
 
 
