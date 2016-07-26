@@ -6,15 +6,41 @@ var $c_01 = '#21b1e0',
 
 console.log( "D3 version: " + d3.version );
 
-var data = [ 44, 10, 20, 30, 40, 50 ];
+var width = 500,
+	height = 500;
 
-console.log( data.shift() );
-console.log( data );
-console.log( data.sort(d3.descending) );
-console.log( d3.min(data) );
-console.log( d3.max(data) );
-console.log( d3.extent(data) );
-console.log( d3.sum(data) );
-console.log( d3.mean(data) );
-console.log( d3.median(data) );
-console.log( d3.shuffle(data) );
+d3.csv("/mydata.csv", function(data) {
+	
+	var canvas = d3.select(".work").append("svg")
+		.attr("width", width)
+		.attr("height", height);
+
+	canvas.selectAll("rect")
+		.data(data)
+		.enter()
+			.append("rect")
+			.attr("width", function(d) {
+				return d.age * 5;
+			})
+			.attr("height", 20)
+			.attr("y", function(d, i) {
+				return i * 22;
+			})
+			.attr("fill", $c_01);
+
+	canvas.selectAll("text")
+		.data(data)
+		.enter()
+			.append("text")
+			.attr("fill", "white")
+			.attr("y", function(d, i) {
+				return i * 22 + 14;
+			})
+			.attr("x", 4)
+			.text(function(d) {
+				return d.name;
+			});
+
+});
+
+
