@@ -11,61 +11,20 @@ var $c_white = '#fff',
 	$c_bg_dark_selected = '#555e75',
 	$c_bg_dark_main = '#383f52';
 
-var colorScale = d3.scale.ordinal()
-	.range([ 
-		$c_bg_light,
-		$c_border_light,
-		$c_text_light_01,
-		$c_bg_dark_selected,
-		$c_bg_dark_main
-	]);
-
 console.log( "D3 version: " + d3.version );
 
 var width = 500,
-	height = 500,
-	r = 150,
-	data = [10, 50, 80, 28, 450];
-
+	height = 500;
 
 var canvas = d3.select(".work").append("svg")
 	.attr("height", height)
 	.attr("width", width);
 
-var group = canvas.append("g")
-	.attr("transform", "translate(" + width/2 + "," + height/2 + ")");
-
-var arc = d3.svg.arc()
-	.innerRadius(r/4)
-	.outerRadius(r);
-
-var pie = d3.layout.pie()
-	.value(function(d) {
-		return d;
-	});
-
-var arcs = group.selectAll(".arc")
-	.data(pie(data))
-	.enter()
-		.append("g")
-		.attr("class", "arc");
-
-arcs.append("path")
-	.attr("d", arc)
-	.attr("fill", function(d) {
-		return colorScale(d.data);
-	});
-
-arcs.append("text")
-	.attr("transform", function(d) {
-		return "translate(" + arc.centroid(d) + ")" ;
-	})
-	.attr("text-anchor", "middle")
-	.attr("font-size", ".5em")
-	.text(function(d) {
-		return d.data;
-	});
-
-
-
-
+var diagonal = d3.svg.diagonal()
+	.source({ x: 10, y: 10 })
+	.target({ x: 300, y: 200 });
+	
+canvas.append("path")
+	.attr("fill", "none")
+	.attr("stroke", "black")
+	.attr("d", diagonal);
