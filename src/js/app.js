@@ -13,8 +13,8 @@ var $c_white = '#fff',
 
 console.log( "D3 version: " + d3.version );
 
-var width = 500,
-	height = 500;
+var width = 800,
+	height = 600;
 
 var canvas = d3.select(".work").append("svg")
 	.attr("height", height)
@@ -22,46 +22,34 @@ var canvas = d3.select(".work").append("svg")
 	.append("g")
 		.attr( "transform", "translate(50, 50)" );
 
-var tree = d3.layout.tree()
-	.size([ 400, 400 ]);
-
+var pack = d3.layout.pack()
+	.size([ width, height - 50 ])
+	.padding(10);
 
 d3.json("mydata.json", function(data) {
 
-	var nodes = tree.nodes( data );
-	var links = tree.links( nodes );
-
+	var nodes = pack.nodes(data);
 	var node = canvas.selectAll(".node")
 		.data(nodes)
 		.enter()
 		.append("g")
 			.attr("class", "node")
 			.attr("transform", function(d) {
-				return "translate( " + d.y + ", " + d.x + ")";
+				return "translate(" + d.x + ", " + d.y + ")";
 			});
 
 	node.append("circle")
-		.attr("r", 5)
-		.attr("fill", $c_border_light);
+		.attr("r", function(d) {
+			return d.r;
+		})
+		.attr("fill", $c_bg_dark_selected)
+		.attr("opacity", 0.25)
+		.attr("stroke", $c_border_light)
+		.attr("stroke-width", 2);
 
 	node.append("text")
-		.text(function(d) {
-			return d.name;
-		})
-		.attr();
-
-	var diagonal = d3.svg.diagonal()
-		.projection( function(d) {
-			return [ d.y, d.x ];
+		.text(function(d){
+			return d.children ? "" : d.name ;
 		});
-
-	canvas.selectAll(".link")
-		.data(links)
-		.enter()
-		.append("path")
-			.attr("class", "link")
-			.attr("fill", "none")
-			.attr("stroke", $c_border_light)
-			.attr("d", diagonal);
 
 });
