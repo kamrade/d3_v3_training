@@ -26,7 +26,7 @@ var pack = d3.layout.pack()
 	.size([ width, height - 50 ])
 	.padding(10);
 
-d3.json("mydata.json", function(data) {
+d3.json("mydata2.json", function(data) {
 
 	var nodes = pack.nodes(data);
 	var node = canvas.selectAll(".node")
@@ -42,7 +42,9 @@ d3.json("mydata.json", function(data) {
 		.attr("r", function(d) {
 			return d.r;
 		})
-		.attr("fill", $c_bg_dark_selected)
+		.attr("fill", function(d){
+			return d.children ? $c_bg_light : $c_bg_dark_selected
+		})
 		.attr("opacity", 0.25)
 		.attr("stroke", $c_border_light)
 		.attr("stroke-width", 2);
