@@ -18,13 +18,50 @@ var width = 500,
 
 var canvas = d3.select(".work").append("svg")
 	.attr("height", height)
-	.attr("width", width);
+	.attr("width", width)
+	.append("g")
+		.attr( "transform", "translate(50, 50)" );
 
-var diagonal = d3.svg.diagonal()
-	.source({ x: 10, y: 10 })
-	.target({ x: 300, y: 200 });
-	
-canvas.append("path")
-	.attr("fill", "none")
-	.attr("stroke", "black")
-	.attr("d", diagonal);
+var tree = d3.layout.tree()
+	.size([ 400, 400 ]);
+
+
+d3.json("mydata.json", function(data) {
+
+	var nodes = tree.nodes( data );
+	var links = tree.links( nodes );
+
+	var node = canvas.selectAll(".node")
+		.data(nodes)
+		.enter()
+		.append("g")
+			.attr("class", "node")
+			.attr("transform", function(d) {
+				return "translate( " + d.y + ", " + d.x + ")";
+			});
+
+	node.append("circle")
+		.attr("r", 5)
+		.attr("fill", $c_border_light);
+
+	node.append("text")
+		.text(function(d) {
+			return d.name;
+		})
+		.attr();
+
+	var diagonal = d3.svg.diagonal()
+		.projection( function(d) {
+			return [ d.y, d.x ];
+		});
+
+	canvas.selectAll(".link")
+		.data(links)
+		.enter()
+		.append("path")
+			.attr("class", "link")
+			.attr("fill", "none")
+			.attr("stroke", $c_border_light)
+			.attr("d", diagonal);
+
+});
